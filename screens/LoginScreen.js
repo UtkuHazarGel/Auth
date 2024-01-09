@@ -6,20 +6,41 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { auth } from "../firebase";
+import { useNavigation } from "@react-navigation/native";
 
 export default function LoginScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigation = useNavigation();
+  useEffect(() => {
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        navigation.navigate("Home")
+      }
+    });
+  });
 
   const handleSignUp = () => {
-    auth.createUserWithEmailAndPassword(email,password).then(userCredentials => {
-      const user = userCredentials.user;
-      console.log("Kulanıcı",user.email)
-    })
-    .catch(error => alert(error.message ))
-  }
+    auth
+      .createUserWithEmailAndPassword(email, password)
+      .then((userCredentials) => {
+        const user = userCredentials.user;
+        console.log("Kulanıcı", user.email);
+      })
+      .catch((error) => alert(error.message));
+  };
+
+  const handleLogin = () => {
+    auth
+      .signInWithEmailAndPassword(email, password)
+      .then((userCredentials) => {
+        const user = userCredentials.user;
+        console.log("Kulanıcı  giriş yaptı", user.email);
+      })
+      .catch((error) => alert(error.message));
+  };
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
       <View style={styles.inputContainer}>
@@ -38,10 +59,13 @@ export default function LoginScreen() {
         />
       </View>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button} onPress={handleLogin}>
           <Text style={styles.buttonText}> Giriş yap</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={[styles.button, styles.outlineButton]} onPress={handleSignUp}>
+        <TouchableOpacity
+          style={[styles.button, styles.outlineButton]}
+          onPress={handleSignUp}
+        >
           <Text style={styles.outlineButtonText}> Kayıt ol</Text>
         </TouchableOpacity>
       </View>

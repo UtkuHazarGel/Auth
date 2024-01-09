@@ -6,14 +6,27 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 
 export default function LoginScreen() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
       <View style={styles.inputContainer}>
-        <TextInput placeholder="Email" style={styles.input} />
-        <TextInput placeholder="Şifre" style={styles.input} />
+        <TextInput
+          placeholder="Email"
+          style={styles.input}
+          value={email}
+          onChangeText={setEmail}
+        />
+        <TextInput
+          placeholder="Şifre"
+          style={styles.input}
+          secureTextEntry
+          value={password}
+          onChangeText={setPassword}
+        />
       </View>
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={styles.button}>
@@ -56,8 +69,6 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "white",
     fontSize: 16,
-    
-    
   },
   outlineButton: {
     backgroundColor: "white",
@@ -66,6 +77,5 @@ const styles = StyleSheet.create({
   outlineButtonText: {
     color: "#0782F9",
     fontSize: 16,
-    
   },
 });

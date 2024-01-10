@@ -11,13 +11,16 @@ import { auth } from "../firebase";
 import { useNavigation } from "@react-navigation/native";
 
 export default function LoginScreen() {
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  
   const navigation = useNavigation();
+
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       if (user) {
-        navigation.navigate("Home")
+        navigation.navigate("Home");
       }
     });
   });

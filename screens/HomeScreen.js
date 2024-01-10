@@ -15,7 +15,7 @@ export default function HomeScreen() {
     <View style={styles.container}>
       <Text>Email: {auth.currentUser?.email}</Text>
       <TouchableOpacity style={styles.button} onPress={handleSignOut}>
-        <Text style={styles.ButtonText}> Çıkış Yap</Text>
+        <Text style={styles.buttonText}> Çıkış Yap</Text>
       </TouchableOpacity>
     </View>
   );
